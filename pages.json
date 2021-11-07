@@ -1,52 +1,57 @@
 {
-	    "easycom": {
-	        "^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
-	    },
+	"easycom": {
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-	    {
-            "path" : "pages/home/home",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "首页",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/category/category",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "分类",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/cart/cart",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "购物车",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/my/my",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "我的",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+		{
+			"path": "pages/home/home",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/category/category",
+			"style": {
+				"navigationBarTitleText": "分类",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/cart/cart",
+			"style": {
+				"navigationBarTitleText": "购物车",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/my/my",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"enablePullDownRefresh": false
+			}
+
+		}
+	],
+	"subPackages": [{
+		"root": "subpkg",
+		"pages": [{
+			"path": "goods_detail/goods_detail",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		}
+		]
+	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "天然商城",
-		"navigationBarBackgroundColor": "#eb4450",
+		"navigationBarBackgroundColor": "#f7f7f7",
 		"backgroundColor": "#F8F8F8"
 	},
 	"tabBar": {
+		"color": "#000000",
 		"selectedColor": "#eb4450",
 		"list": [{
 				"pagePath": "pages/home/home",
