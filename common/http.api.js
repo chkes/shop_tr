@@ -9,14 +9,12 @@ const install = (Vue, vm) => {
 	// 定义api属性
 	vm.$u.api = {}
 	// 首页
-	vm.$u.api.index = (params = {}) => vm.$u.get("/api/index",params);
-	// // 首页分类
-	// vm.$u.api.catitems = (params = {}) => vm.$u.get("/home/catitems",params);
-	// // 首页楼层
-	// vm.$u.api.floordata = (params = {}) => vm.$u.get("/home/floordata",params);
-	// // 认证相关
-	// // vm.$u.api.authLogin = (params = {}) => vm.$u.post("/api/auth/login",params);
-
+	vm.$u.api.index = (params = {}) => vm.$u.get("/api/index",params);    // 获取首页信息
+	// 认证相关
+	vm.$u.api.authLogin = (params = {}) => vm.$u.post("/api/auth/login",params);    // 登录
+	vm.$u.api.register = (params = {}) => vm.$u.post("/api/auth/register",params);  // 注册
+	// 用户信息
+	vm.$u.api.userInfo = () => vm.$u.get("/api/user");      //获取用户信息
 }
 
 export default {

@@ -27,7 +27,7 @@ const install = (Vue, vm) => {
 		// 方式一，存放在vuex的token，假设使用了uView封装的vuex方式
 		// 见：https://uviewui.com/components/globalVariable.html
 		// config.header.token = vm.token;
-		config.header.Authorization = "Bearer" + vm.access_token;
+		config.header.Authorization = "Bearer" + vm.vuex_token;
 		// 方式二，如果没有使用uView封装的vuex方法，那么需要使用$store.state获取
 		// config.header.token = vm.$store.state.token;
 
@@ -50,14 +50,13 @@ const install = (Vue, vm) => {
 
 	// 响应拦截，判断状态码是否通过
 	Vue.prototype.$u.http.interceptor.response = (res) => {
-		// uni.showLoading({
-		// 	title: "数据加载中..."
-		// })
-		// uni.hideLoading()
 		// 获取 状态码和数据
 		console.log(res)
+		
 		const {statusCode,data} = res
+
 		if (statusCode < 400) {
+			console.log(200)
 			// res为服务端返回值，可能有code，result等字段
 			// 这里对res.result进行返回，将会在this.$u.post(url).then(res => {})的then回调中的res的到
 			// 如果配置了originalData为true，请留意这里的返回值
@@ -68,12 +67,12 @@ const install = (Vue, vm) => {
 			vm.$u.toast(data.message)
 			return false;
 		} else if (statusCode == 401) {
-			// 假设201为token失效，这里跳转登录
-			vm.$u.toast('验证失败，请重新登录');
-			setTimeout(() => {
-				// 此为uView的方法，详见路由相关文档
-				vm.$u.route('/pages/user/login')
-			}, 1500)
+			if(data.message == "Unauthorized") {
+				vm.$u.toast('账号或密码错误')
+			}else{
+				// 重新登录
+				vm.$u.utils.isLogin()
+			}
 			return false;
 		} else if (statusCode == 422) {
 			// 表单验证没有通过 弹窗返回错误信息
@@ -81,7 +80,14 @@ const install = (Vue, vm) => {
 				errors
 			} = data
 			// 获取错误信息     根据接口格式而改变
-			vm.$u.toast(Object.value(errors)[0][0])
+			console.log(422)
+			console.log(errors)
+			console.log( typeof errors)
+			uni.$showMsg('注册失败')
+			// uni.showToast({	
+			// 	title: '登录失败',
+			// 	duration：'1000'
+			// })
 			return false;
 		} else {
 			// 如果返回false，则会调用Promise的reject回调，

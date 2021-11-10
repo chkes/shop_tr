@@ -13,6 +13,10 @@
 		},
 		methods: {
 			
+		},
+		onLoad(){
+			// 判断是否登录
+			if(!this.$u.utils.isLogin()) return
 		}
 	}
 </script>

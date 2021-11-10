@@ -1,18 +1,22 @@
 import App from './App'
-import store from '@/store';
+import Vue from 'vue'
 
 // #ifndef VUE3
-import Vue from 'vue'
+Vue.config.productionTip = false
+// 引入vuex
 import uView from "uview-ui";
 Vue.use(uView);
-Vue.config.productionTip = false
+
 App.mpType = 'app'
+
+let vuexStore = require("@/store/$u.mixin.js");
+Vue.mixin(vuexStore);
+import store from '@/store';
+
 const app = new Vue({
 	store,
     ...App
 })
-
-
 
 // http拦截器，此为需要加入的内容，如果不是写在common目录，请自行修改引入路径
 import httpInterceptor from '@/common/http.interceptor.js'
@@ -22,18 +26,13 @@ Vue.use(httpInterceptor, app)
 // http接口API集中管理引入部分
 import httpApi from '@/common/http.api.js'
 Vue.use(httpApi, app)
-// 引入vuex
-let vuexStore = require("@/store/$u.mixin.js");
-Vue.mixin(vuexStore);
 
-// 封装弹框方法
-uni.$showMsg = function(title = '数据请求失败！',duration =1500){
-	uni.showToast({
-		title,
-		duration,
-		icon:'none'
-	})
-}
+// 自定义工具
+import utils from '@/common/utils.js'
+Vue.use(utils, app)
+
+
+
 
 
 app.$mount()
