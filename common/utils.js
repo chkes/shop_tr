@@ -32,9 +32,18 @@ const install = (Vue,vm) => {
 	   }
 	   return true
    }
-
+	/*
+	* 请求用户信息
+	*/
+   const getUserInfo = async() =>{
+	   // 请求用户信息
+	   const userInfo = await vm.$u.api.userInfo()
+	   // 存储用户信息
+	   vm.$u.vuex("vuex_user", userInfo)
+   }
 	vm.$u.utils={
-		isLogin
+		isLogin,
+		getUserInfo
 	}
 }
 

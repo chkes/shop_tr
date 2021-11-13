@@ -52,32 +52,26 @@
 				const loginRes = await this.$u.api.authLogin(params)
 				// 存储用户token
 				this.$u.vuex("vuex_token", loginRes.access_token)
-				// 请求用户信息
-				const userInfo = await this.$u.api.userInfo()
 				this.$u.toast('登陆成功')
-				// 存储用户信息
-				this.$u.vuex("vuex_user", userInfo)
+				// 得到用户信息并存储
+				this.$u.utils.getUserInfo()
 				// 登录之后跳转到来源页
 				const backPage = uni.getStorageSync('backPage') || 'pages/home/home'
 				console.log(backPage)
 				setTimeout(() => {
 					console.log(1)
 					this.$u.route({
-						type:'reLaunch',
-						url:backPage
+						type: 'reLaunch',
+						url: backPage
 					})
-				},1500)
-
-				
+				}, 1500)
 			},
 			// 前往注册页面
-			toRegister(){
-
-					this.$u.route({
-						type:'navigateTo',
-						url:'pages/auth/register'
-					})
-
+			toRegister() {
+				this.$u.route({
+					type: 'navigateTo',
+					url: 'pages/auth/register'
+				})
 			}
 		}
 	};

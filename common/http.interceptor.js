@@ -7,7 +7,7 @@ const install = (Vue, vm) => {
 		// method: 'POST',
 		// 设置为json，返回后会对数据进行一次JSON.parse()
 		dataType: 'json',
-		showLoading: true, // 是否显示请求中的loading
+		showLoading: false, // 是否显示请求中的loading
 		loadingText: '请求中...', // 请求loading中的文字提示
 		loadingTime: 800, // 在此时间内，请求还没回来的话，就显示加载中动画，单位ms
 		originalData: true, // 是否在拦截器中返回服务端的原始数据
@@ -50,13 +50,9 @@ const install = (Vue, vm) => {
 
 	// 响应拦截，判断状态码是否通过
 	Vue.prototype.$u.http.interceptor.response = (res) => {
-		// 获取 状态码和数据
-		console.log(res)
-		
 		const {statusCode,data} = res
 
 		if (statusCode < 400) {
-			console.log(200)
 			// res为服务端返回值，可能有code，result等字段
 			// 这里对res.result进行返回，将会在this.$u.post(url).then(res => {})的then回调中的res的到
 			// 如果配置了originalData为true，请留意这里的返回值
@@ -83,7 +79,6 @@ const install = (Vue, vm) => {
 			console.log(422)
 			console.log(errors)
 			console.log( typeof errors)
-			uni.$showMsg('注册失败')
 			// uni.showToast({	
 			// 	title: '登录失败',
 			// 	duration：'1000'
@@ -103,9 +98,9 @@ const install = (Vue, vm) => {
 		// 模拟patch请求
 		const _params = {
 			...params,
-			_methods: "PATCH"
+			_method: "PATCH"
 		}
-		return vm.$u.get(url, _params)
+		return vm.$u.post(url, _params,header)
 	}
 }
 

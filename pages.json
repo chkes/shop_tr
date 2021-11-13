@@ -36,7 +36,7 @@
             "path" : "pages/auth/login",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "登录",
                 "enablePullDownRefresh": false
             }
             
@@ -45,7 +45,23 @@
             "path" : "pages/auth/register",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "注册",
+                "enablePullDownRefresh": false
+            }
+        }
+		,{
+		    "path" : "pages/user/userInfo",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "更改个人信息",
+		        "enablePullDownRefresh": false
+		    }
+		}
+        ,{
+            "path" : "pages/goods/goods",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "详细类目",
                 "enablePullDownRefresh": false
             }
             
@@ -56,7 +72,7 @@
 		"pages": [{
 			"path": "goods_detail/goods_detail",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "详情",
 				"enablePullDownRefresh": false
 			}
 		}
