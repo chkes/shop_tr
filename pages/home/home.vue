@@ -32,7 +32,7 @@
 
 		<u-row gutter="16" class="u-skeleton">
 			<!-- goods.length !==0 ? goods  为了撑开骨架屏 -->
-			<u-col span="6" v-for="(goods,i) in goodsList "  :key="i">
+			<u-col span="6" v-for="(goods,index) in goodsList.length ? goodsList : 4"  :key="index">
 				<goods-card :goods="goods"></goods-card>
 			</u-col>
 
@@ -60,15 +60,14 @@
 				}],
 				// 当前tabs
 				currentTabs: 0,
-				src: "https://oss.shop.eduwork.cn/product/2020-0820-5f3e16f27f829.png",
 				// 商品数组
-				goodsList: [{},{},{},{},{},{},{},{}],
+				goodsList: [],
 				// page当前页数
 				page: 1,
 				// 轮播图数组
 				slides: [],
 				// 骨架屏控制
-				loading: true
+				loading: false
 			};
 		},
 		methods: {
@@ -78,7 +77,7 @@
 				this.currentTabs = index;
 				console.log(this.currentTabs)
 				// 重置goods数组
-				this.goodsList = [{},{},{},{},{},{},{},{}]
+				this.goodsList = []
 				// 请求
 				this.getData()
 			},
@@ -112,7 +111,7 @@
 	
 				// 商品赋值
 				// this.goodsList =	res.goods.data.length !==0 ? [...this.goodsList, ...res.goods.data] : this.goodsList
-				this.goodsList = this.goodsList.pop().title ? [...this.goodsList, ...res.goods.data] : res.goods.data
+				this.goodsList.push(...res.goods.data)
 				// 商品页数
 				this.page = res.goods.current_page
 			},

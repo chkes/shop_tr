@@ -41,7 +41,7 @@
 			},
 			// 是否为选中状态
 			value: {
-				type: Boolean,
+				type: [Boolean,String,Number],
 				default: false
 			},
 			// 是否禁用

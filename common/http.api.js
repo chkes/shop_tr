@@ -18,6 +18,10 @@ const install = (Vue, vm) => {
 	
 	// 购物车
 	vm.$u.api.joinCart = (params) => vm.$u.post("/api/carts",params); // 加入购物车
+	vm.$u.api.getCart = () => vm.$u.get("/api/carts?include=goods"); // 获取购物车列表
+	vm.$u.api.isCheck = cart_ids => vm.$u.patch(`/api/carts/checked`,{cart_ids});//将商品选中与否
+	vm.$u.api.delShopCart = (cart) => vm.$u.delete(`/api/carts/${cart}`); // 移出购物车
+	vm.$u.api.editgoodsNum = (cart,num) => vm.$u.put(`/api/carts/${cart}`,{num}); // 购物车数量改变
 	
 	// 认证相关
 	vm.$u.api.authLogin = (params = {}) => vm.$u.post("/api/auth/login", params); // 登录
@@ -28,6 +32,9 @@ const install = (Vue, vm) => {
 	vm.$u.api.userInfo = () => vm.$u.get("/api/user"); //获取用户信息
 	vm.$u.api.editUserInfo = (params = {}) => vm.$u.put("/api/user", params); //更改用户信息  name
 	vm.$u.api.updateUserAvatar = params => vm.$u.patch("/api/user/avatar", params); //更改用户头像
+	// 我的页面
+	vm.$u.api.getGoodsCollect = (page) => vm.$u.get(`/api/collects`,{page}); // 获取商品收藏信息
+	
 	
 }
 

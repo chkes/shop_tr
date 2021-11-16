@@ -8,6 +8,7 @@
 
 			<view class="p-b u-flex u-row-between u-p-t-30">
 				<view class="price u-skeleton-rect">$ {{goods.price ? goods.price : '60'}}</view>
+				<view class="stock">库存 {{goods.stock}}</view>
 				<view class="buypeopel u-skeleton-rect"> 销量 {{goods.sales}}</view>
 			</view>
 		</navigator>
@@ -16,7 +17,7 @@
 			</u-tabs>
 		</view>
 		<view class="tab1  " v-if="currentTabs == 0" >
-			<view class="u-content">
+			<view class="position u-p-20 u-content">
 				<u-parse :html="goods.details"></u-parse>
 			</view>
 		</view>
@@ -43,12 +44,12 @@
 					</view>
 				</block>
 
-				<view class="shop">
+				<view class="shop"  @click="toShopCart ">
 					<view class=" iconfont icon-gouwuche"></view>
 					<view>购物车</view>
 				</view>
-				<view class="joinshopcurt u-p-r-10" >
-					<u-button type="warning" @click="joinCart" shape="circle">加入购物车</u-button>
+				<view class="joinshopcurt u-p-r-10">
+					<u-button type="warning" @click="joinCart" shape="circle" >加入购物车</u-button>
 					
 				</view>
 				<view class="pay">
@@ -75,8 +76,7 @@
 				listTabs: [{
 					name: '商品详情'
 				}, {
-					name: '商品评论',
-					count: 5
+					name: '商品评论'
 				}, {
 					name: '商品推荐'
 				}],
@@ -122,6 +122,8 @@
 			},
 			// joinCart
 			async joinCart(){
+				// 判断是否登录
+				if (!this.$u.utils.isLogin()) return 
 				// 参数
 				const params = {
 					goods_id:this.goodsId
@@ -129,6 +131,13 @@
 				await this.$u.api.joinCart(params)
 				//	提示
 				this.$u.toast('加入成功')
+			},
+			// 跳转到购物车页面
+			toShopCart(){
+				this.$u.route({
+					type:'reLaunch',
+					url:'pages/cart/cart'
+				})
 			},
 			// Tab标题切换
 			changeTabs(index) {
@@ -154,6 +163,11 @@
 	.tab1{
 		overflow: hidden;
 		padding-bottom: 50px;
+		.position{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 	}
 	.goods_item {
 		padding: 20rpx;
@@ -174,7 +188,10 @@
 				font-weight: 700;
 				color: #c63550;
 			}
-
+			.stock{
+				color: #686868;
+				font-weight: 500;
+			}
 			.buypeopel {
 				color: #686868;
 				font-weight: 500;

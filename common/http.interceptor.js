@@ -13,10 +13,10 @@ const install = (Vue, vm) => {
 		originalData: true, // 是否在拦截器中返回服务端的原始数据
 		loadingMask: true, // 展示loading的时候，是否给一个透明的蒙层，防止触摸穿透
 		// 配置请求头信息
-		header: {
-			'content-type': 'application/x-www-form-urlencoded',
-			// application/json;charset=UTF-8
-		},
+		// header: {
+		// 	'content-type': 'application/x-www-form-urlencoded',
+		// 	// application/json;charset=UTF-8
+		// },
 
 	});
 
@@ -57,6 +57,7 @@ const install = (Vue, vm) => {
 			// 这里对res.result进行返回，将会在this.$u.post(url).then(res => {})的then回调中的res的到
 			// 如果配置了originalData为true，请留意这里的返回值
 			// vm.$u.toast(data.message)
+			console.log(res)
 			return data;
 		} else if (statusCode == 400) {
 			// 假设400服务器请求错误  弹窗返回错误信息
@@ -78,7 +79,6 @@ const install = (Vue, vm) => {
 			// 获取错误信息     根据接口格式而改变
 			console.log(422)
 			console.log(errors)
-			console.log( typeof errors)
 			// uni.showToast({	
 			// 	title: '登录失败',
 			// 	duration：'1000'
@@ -93,15 +93,15 @@ const install = (Vue, vm) => {
 		}
 		
 	}
-	// 添加patch请求
-	vm.$u.patch = (url, params = {}, header = {}) => {
-		// 模拟patch请求
-		const _params = {
-			...params,
-			_method: "PATCH"
+	// 增加patch请求
+		vm.$u.patch = (url, params = {}, header = {}) => {
+			// 模拟patch请求
+			const _params = {
+				...params,
+				_method: 'PATCH'
+			}
+			return vm.$u.post(url, _params, header)
 		}
-		return vm.$u.post(url, _params,header)
-	}
 }
 
 export default {

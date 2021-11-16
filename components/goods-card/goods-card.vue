@@ -54,7 +54,7 @@
 
 			.buypeopel {
 				color: #aba8ab;
-				width: 40%;
+				
 				font-size: 20rpx;
 			}
 		}

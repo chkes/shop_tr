@@ -25,7 +25,7 @@ const install = (Vue,vm) => {
 	   	setTimeout(() => {
 	   		uni.redirectTo({
 	   			type:'redirect',
-	   			url:"../auth/login"
+	   			url:"/pages/auth/login"
 	   		})
 	   	},1500)
 		return false

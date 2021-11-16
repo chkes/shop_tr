@@ -25,22 +25,23 @@
 
 		<view class="u-m-t-20">
 			<u-cell-group>
-				<u-cell-item icon="setting" title="个人信息" @click="changeUserInfo"></u-cell-item>
+				<u-cell-item icon="setting" v-if="this.vuex_token" title="个人信息" @click="changeUserInfo"></u-cell-item>
+				<u-cell-item icon="setting" v-else title="登录" @click="login"></u-cell-item>
 			</u-cell-group>
 		</view>
 
 		<view class="u-m-t-20">
 			<u-cell-group>
-				<u-cell-item icon="rmb-circle" title="所有订单"></u-cell-item>
-				<u-cell-item icon="star" title="商品收藏"></u-cell-item>
-				<u-cell-item icon="map" title="收货地址"></u-cell-item>
+				<u-cell-item v-if="this.vuex_token" icon="rmb-circle" title="所有订单"></u-cell-item>
+				<u-cell-item v-if="this.vuex_token" icon="star" title="商品收藏"></u-cell-item>
+				<u-cell-item v-if="this.vuex_token" icon="map" title="收货地址"></u-cell-item>
 			</u-cell-group>
 		</view>
 
 		<view class="u-m-t-20">
 			<u-cell-group>
 				<u-cell-item icon="setting" title="设置"></u-cell-item>
-				<u-cell-item icon="reload" title="退出登录" @click="outLogin"></u-cell-item>
+				<u-cell-item v-if="this.vuex_token" icon="reload" title="退出登录" @click="outLogin"></u-cell-item>
 			</u-cell-group>
 		</view>
 	</view>
@@ -56,14 +57,22 @@
 		},
 		onLoad() {
 			// 判断是否登录
-			if (!this.$u.utils.isLogin()) return
+			// if (!this.$u.utils.isLogin()) return
 		},
 		methods: {
+			// 登录
+			login(){
+				uni.redirectTo({
+					type:'redirectTo',
+					url:"/pages/auth/login"
+				})
+			},
 			// 进入修改个人信息页面
 			changeUserInfo() {
 				this.$u.route({
-					type: 'navigateTo',
-					url: 'pages/user/userInfo'
+					type: 'navigateBack',
+					url: 'pages/user/userInfo',
+					delta:-1
 				})
 			},
 			// 退出登录
